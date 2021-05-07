@@ -6,71 +6,48 @@ cmake_minimum_required(VERSION 3.4.1)
 
 # Create a variable fluidsynth_DIR to specify where the fluidsynth library is located.
 set(fluidsynth_DIR ${CMAKE_CURRENT_SOURCE_DIR}/fluidsynth)
+set(ANDROID_API_DIR ${CMAKE_SOURCE_DIR}/../jniLibs/${ANDROID_ABI})
 
 # Our code (native-lib.cpp) will be calling fluidsynth functions, so we add the fluidsynth binaries as dependencies of our code.
 
 add_library(libc++_shared SHARED IMPORTED)
-set_target_properties(libc++_shared PROPERTIES IMPORTED_LOCATION ${fluidsynth_DIR}/lib/${ANDROID_ABI}/libc++_shared.so)
-
-add_library(libcharset SHARED IMPORTED)
-set_target_properties(libcharset PROPERTIES IMPORTED_LOCATION ${fluidsynth_DIR}/lib/${ANDROID_ABI}/libcharset.so)
-
-add_library(libffi SHARED IMPORTED)
-set_target_properties(libffi PROPERTIES IMPORTED_LOCATION ${fluidsynth_DIR}/lib/${ANDROID_ABI}/libffi.so)
+set_target_properties(libc++_shared PROPERTIES IMPORTED_LOCATION ${ANDROID_API_DIR}/libc++_shared.so)
 
 add_library(libFLAC SHARED IMPORTED)
-set_target_properties(libFLAC PROPERTIES IMPORTED_LOCATION ${fluidsynth_DIR}/lib/${ANDROID_ABI}/libFLAC.so)
+set_target_properties(libFLAC PROPERTIES IMPORTED_LOCATION ${ANDROID_API_DIR}/libFLAC.so)
 
 add_library(libfluidsynth SHARED IMPORTED)
-set_target_properties(libfluidsynth PROPERTIES IMPORTED_LOCATION ${fluidsynth_DIR}/lib/${ANDROID_ABI}/libfluidsynth.so)
-
-add_library(libfluidsynth-assetloader SHARED IMPORTED)
-set_target_properties(libfluidsynth-assetloader PROPERTIES IMPORTED_LOCATION ${fluidsynth_DIR}/lib/${ANDROID_ABI}/libfluidsynth-assetloader.so)
-
-add_library(libgio-2.0 SHARED IMPORTED)
-set_target_properties(libgio-2.0 PROPERTIES IMPORTED_LOCATION ${fluidsynth_DIR}/lib/${ANDROID_ABI}/libgio-2.0.so)
+set_target_properties(libfluidsynth PROPERTIES IMPORTED_LOCATION ${ANDROID_API_DIR}/libfluidsynth.so)
 
 add_library(libglib-2.0 SHARED IMPORTED)
-set_target_properties(libglib-2.0 PROPERTIES IMPORTED_LOCATION ${fluidsynth_DIR}/lib/${ANDROID_ABI}/libglib-2.0.so)
-
-add_library(libgmodule-2.0 SHARED IMPORTED)
-set_target_properties(libgmodule-2.0 PROPERTIES IMPORTED_LOCATION ${fluidsynth_DIR}/lib/${ANDROID_ABI}/libgmodule-2.0.so)
-
-add_library(libgobject-2.0 SHARED IMPORTED)
-set_target_properties(libgobject-2.0 PROPERTIES IMPORTED_LOCATION ${fluidsynth_DIR}/lib/${ANDROID_ABI}/libgobject-2.0.so)
+set_target_properties(libglib-2.0 PROPERTIES IMPORTED_LOCATION ${ANDROID_API_DIR}/libglib-2.0.so)
 
 add_library(libgthread-2.0 SHARED IMPORTED)
-set_target_properties(libgthread-2.0 PROPERTIES IMPORTED_LOCATION ${fluidsynth_DIR}/lib/${ANDROID_ABI}/libgthread-2.0.so)
+set_target_properties(libgthread-2.0 PROPERTIES IMPORTED_LOCATION ${ANDROID_API_DIR}/libgthread-2.0.so)
 
 add_library(libiconv SHARED IMPORTED)
-set_target_properties(libiconv PROPERTIES IMPORTED_LOCATION ${fluidsynth_DIR}/lib/${ANDROID_ABI}/libiconv.so)
+set_target_properties(libiconv PROPERTIES IMPORTED_LOCATION ${ANDROID_API_DIR}/libiconv.so)
 
 add_library(libintl SHARED IMPORTED)
-set_target_properties(libintl PROPERTIES IMPORTED_LOCATION ${fluidsynth_DIR}/lib/${ANDROID_ABI}/libintl.so)
+set_target_properties(libintl PROPERTIES IMPORTED_LOCATION ${ANDROID_API_DIR}/libintl.so)
 
 add_library(liboboe SHARED IMPORTED)
-set_target_properties(liboboe PROPERTIES IMPORTED_LOCATION ${fluidsynth_DIR}/lib/${ANDROID_ABI}/liboboe.so)
+set_target_properties(liboboe PROPERTIES IMPORTED_LOCATION ${ANDROID_API_DIR}/liboboe.so)
 
 add_library(libogg SHARED IMPORTED)
-set_target_properties(libogg PROPERTIES IMPORTED_LOCATION ${fluidsynth_DIR}/lib/${ANDROID_ABI}/libogg.so)
+set_target_properties(libogg PROPERTIES IMPORTED_LOCATION ${ANDROID_API_DIR}/libogg.so)
 
 add_library(libsndfile SHARED IMPORTED)
-set_target_properties(libsndfile PROPERTIES IMPORTED_LOCATION ${fluidsynth_DIR}/lib/${ANDROID_ABI}/libsndfile.so)
+set_target_properties(libsndfile PROPERTIES IMPORTED_LOCATION ${ANDROID_API_DIR}/libsndfile.so)
 
 add_library(libvorbis SHARED IMPORTED)
-set_target_properties(libvorbis PROPERTIES IMPORTED_LOCATION ${fluidsynth_DIR}/lib/${ANDROID_ABI}/libvorbis.so)
+set_target_properties(libvorbis PROPERTIES IMPORTED_LOCATION ${ANDROID_API_DIR}/libvorbis.so)
 
 add_library(libvorbisenc SHARED IMPORTED)
-set_target_properties(libvorbisenc PROPERTIES IMPORTED_LOCATION ${fluidsynth_DIR}/lib/${ANDROID_ABI}/libvorbisenc.so)
-
-add_library(libvorbisfile SHARED IMPORTED)
-set_target_properties(libvorbisfile PROPERTIES IMPORTED_LOCATION ${fluidsynth_DIR}/lib/${ANDROID_ABI}/libvorbisfile.so)
-
-add_library(libz SHARED IMPORTED)
-set_target_properties(libz PROPERTIES IMPORTED_LOCATION ${fluidsynth_DIR}/lib/${ANDROID_ABI}/libz.so)
+set_target_properties(libvorbisenc PROPERTIES IMPORTED_LOCATION ${ANDROID_API_DIR}/libvorbisenc.so)
 
 add_library(preloadable_libiconv SHARED IMPORTED)
-set_target_properties(preloadable_libiconv PROPERTIES IMPORTED_LOCATION ${fluidsynth_DIR}/lib/${ANDROID_ABI}/preloadable_libiconv.so)
+set_target_properties(preloadable_libiconv PROPERTIES IMPORTED_LOCATION ${ANDROID_API_DIR}/preloadable_libiconv.so)
 
 # Library that will be called directly from JAVA
 add_library(native-lib SHARED native-lib.cpp)
@@ -82,15 +59,9 @@ target_include_directories(native-lib PRIVATE ${fluidsynth_DIR}/include)
 target_link_libraries(
         native-lib
         libc++_shared
-        libcharset
-        libffi
         libFLAC
         libfluidsynth
-        libfluidsynth-assetloader
-        libgio-2.0
         libglib-2.0
-        libgmodule-2.0
-        libgobject-2.0
         libgthread-2.0
         libiconv
         libintl
@@ -99,7 +70,5 @@ target_link_libraries(
         libsndfile
         libvorbis
         libvorbisenc
-        libvorbisfile
-        libz
         preloadable_libiconv
 )

@@ -4,10 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,10 +27,26 @@ public class MainActivity extends AppCompatActivity {
 
         try {
             String tempSoundfontPath = copyAssetToTmpFile("sndfnt.sf2");
-            fluidsynthHelloWorld(tempSoundfontPath);
+            loadSoundFont(tempSoundfontPath);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
+        findViewById(R.id.randomPlayBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int randomKey = new Random().nextInt(108 - 21) + 21;
+                TextView randomKeyTextView = findViewById(R.id.randomKey);
+                randomKeyTextView.setText(randomKey + "");
+                playNote(randomKey);
+            }
+        });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        release();
     }
 
     private String copyAssetToTmpFile(String fileName) throws IOException {
@@ -47,5 +67,9 @@ public class MainActivity extends AppCompatActivity {
      * A native method that is implemented by the 'native-lib' native library,
      * which is packaged with this application.
      */
-    public native void fluidsynthHelloWorld(String soundfontPath);
+    public native void loadSoundFont(String soundfontPath);
+
+    public native void playNote(int key);
+
+    public native void release();
 }
