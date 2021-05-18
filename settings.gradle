@@ -1,2 +1,2 @@
 include ':app'
-rootProject.name = "Fluidsynth Android Hello World"
+rootProject.name = "Fluidsynth Android Play Note"
