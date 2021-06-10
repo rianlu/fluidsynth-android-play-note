@@ -12,9 +12,13 @@ JNIEXPORT void JNICALL
 Java_com_example_fluidsynthandroidhelloworld_MainActivity_loadSoundFont(JNIEnv *env, jobject thiz,
                                                                         jstring jSoundfontPath) {
     // Setup synthesizer
-    fluid_settings_t *settings = new_fluid_settings();
+    settings = new_fluid_settings();
+    fluid_settings_setstr(settings, "audio.driver", "opensles");
+    fluid_settings_setint(settings, "audio.opensles.use-callback-mode", 1);
+    fluid_settings_setint(settings, "audio.period-size", 64);
+
     synth = new_fluid_synth(settings);
-    fluid_audio_driver_t *adriver = new_fluid_audio_driver(settings, synth);
+    adriver = new_fluid_audio_driver(settings, synth);
 
     // Load sample soundfont
     const char* soundfontPath = env->GetStringUTFChars(jSoundfontPath, nullptr);

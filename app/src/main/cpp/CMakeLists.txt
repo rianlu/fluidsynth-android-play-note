@@ -58,17 +58,5 @@ target_include_directories(native-lib PRIVATE ${fluidsynth_DIR}/include)
 # Link everything alltogether. Notice that native-lib should be the first element in the list.
 target_link_libraries(
         native-lib
-        libc++_shared
-        libFLAC
         libfluidsynth
-        libglib-2.0
-        libgthread-2.0
-        libiconv
-        libintl
-        liboboe
-        libogg
-        libsndfile
-        libvorbis
-        libvorbisenc
-        preloadable_libiconv
 )
